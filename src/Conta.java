@@ -18,7 +18,7 @@ public abstract class Conta implements IConta {
         investimentoVariavel = investimento.nextInt(1,4);
 
         if (escolha == 1){
-            this.saldo += 1.03f;
+            this.saldo *= 1.03f;
         } else {
             if (investimentoVariavel == 1){
                 this.saldo *= 1.05f;
