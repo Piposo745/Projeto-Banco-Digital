@@ -57,6 +57,7 @@ public class Main {
 
                     case 6: {
                         System.out.println("Finalizando sistema....");
+                        break;
                     }
 
                     default:
