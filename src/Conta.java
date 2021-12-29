@@ -11,10 +11,20 @@ public abstract class Conta implements IConta {
     protected int investimentoVariavel;
     protected int investBolsa;
     protected int subiuOuDesceu;
-    protected boolean vender;
+    protected int switchEscolha;
+    protected float precoPetrobras;
+    protected float precoNubank;
+    protected float precoJBS;
+    protected float quantAcoes;
+    protected int vende;
+    protected float calculoGanhos;
+    protected int rodando;
+    protected String qualquerTecla;
+    protected float valorInvestido;
     Scanner digite = new Scanner(System.in);
     Random investimento = new Random();
     Random bolsa = new Random();
+    Random preco = new Random();
 
 
     public void investimentos(){
@@ -85,6 +95,7 @@ public abstract class Conta implements IConta {
         System.out.println("Você acha que a ação vai subir ou descer? [0 - Subiu ou 1 - Desceu]");
         subiuOuDesceu = digite.nextInt();
         investBolsa = bolsa.nextInt(2);
+
         if (subiuOuDesceu == 0 && investBolsa == 0){
             this.saldo *= 1.33f;
             System.out.println("Você acertou a ação subiu, isso te rendeu 33% de lucro UAU% :))");
@@ -93,10 +104,192 @@ public abstract class Conta implements IConta {
             System.out.println("Você acertou a ação desceu e isso te rendeu 9% de lucro");
         } else {
             this.saldo *= 0.82;
-            System.out.println("Que desastre você errou :(, descanse e tente mais tarde ou peça um emprestimo conosco :)");
+            System.out.println("Que desastre você errou :(, descanse e tente mais tarde ou " +
+                    "peça um emprestimo conosco :)");
         }
     }
 
+
+
+
+    public void investirAcoes(){
+
+        System.out.println("###### Ações #######");
+
+        System.out.println("Qual ação deseja comprar?\n1 - Petrobras\n2 - Nubank\n3 - JBS\n4 - Sair");
+        switchEscolha = digite.nextInt();
+
+        switch (switchEscolha){
+
+            case 1: {
+                System.out.println("Ação petrobras");
+                System.out.println("Deseja comprar quantas ações? Preço R$"+this.precoPetrobras);
+                this.quantAcoes = digite.nextInt();
+                System.out.println("Quantos ciclos queres esperar para vender as ações?");
+                this.rodando = digite.nextInt() - 1;
+                this.valorInvestido = this.precoPetrobras * quantAcoes;
+                System.out.println("Valor investido = > "+this.valorInvestido);
+
+                if (this.saldo > this.quantAcoes * this.precoPetrobras){
+                    System.out.println("Compra executada com sucesso");
+                    this.saldo -= this.valorInvestido;
+                    System.out.println("----------------------------------------------------------");
+                   
+                    lacoForPetrobras();
+                }
+                else {
+                    System.out.println("Saldo insuficiente");
+                }
+
+                break;
+            }
+
+            case 2: {
+                System.out.println("Ações Nubank");
+                System.out.println("Deseja comprar quantas ações? Preço R$"+this.precoNubank);
+                this.quantAcoes = digite.nextInt();
+                System.out.println("Quantos ciclos queres esperar esperar para vender as ações?");
+                this.rodando = digite.nextInt() - 1;
+                this.valorInvestido = this.precoNubank * quantAcoes;
+                System.out.println("Valor investido = > "+this.valorInvestido);
+
+                if (this.saldo > this.quantAcoes * this.precoNubank){
+                    System.out.println("Compra executada com sucesso");
+                    this.saldo -= this.valorInvestido;
+                    System.out.println("-----------------------------------------------------");
+                    
+                    lacoForNubank();
+
+
+                }
+                else {
+                    System.out.println("Saldo insuficiente");
+                }
+
+                break;
+            }
+
+            case 3: {
+                System.out.println("Ações JBS");
+                System.out.println("Deseja comprar quantas ações? Preço R$"+this.precoJBS);
+                this.quantAcoes = digite.nextInt();
+                System.out.println("Quantos ciclos queres esperar esperar para vender as ações?");
+                this.rodando = digite.nextInt() - 1;
+                this.valorInvestido = this.precoJBS * quantAcoes;
+                System.out.println("Valor investido = > "+this.valorInvestido);
+
+                if (this.saldo > this.quantAcoes * this.precoJBS){
+                    System.out.println("Compra executada com sucesso");
+                    this.saldo -= this.valorInvestido;
+                    System.out.println("-----------------------------------------------------");
+                   
+                    lacoForJBS();
+
+                }
+                else {
+                    System.out.println("Saldo insuficiente");
+                }
+                break;
+
+            }
+
+            case 4: {
+                System.out.println("Saindo do sistema.....");
+                break;
+            }
+        }
+    }
+
+    public void lacoForPetrobras() {
+        for (this.vende = 0; this.vende <= this.rodando; this.vende++){
+            this.precoPetrobras = preco.nextFloat() * 80;
+            System.out.println("Esse é o preço atual delas: "+this.precoPetrobras);
+
+            if (this.vende == this.rodando){
+                this.calculoGanhos = this.precoPetrobras * this.quantAcoes;
+                if (valorInvestido < calculoGanhos){
+                    this.saldo += this.calculoGanhos;
+                    this.calculoGanhos -= this.valorInvestido;
+                    System.out.println("Seu lucro foi de R$:"+this.calculoGanhos);
+                    System.out.println("=========================================================");
+                } else {
+                    this.saldo -= this.calculoGanhos;
+                    this.calculoGanhos -= this.valorInvestido;
+                    System.out.println("Seu prejuizo foi de R$:"+this.calculoGanhos);
+                    System.out.println("=========================================================");
+                }
+            } else {
+                System.out.println("Ciclo ainda não encerrado!");
+                System.out.println("---------------------------------------------");
+                System.out.println("Digite a tecla {S} para continuar");
+                qualquerTecla = digite.next().toUpperCase();
+                if (qualquerTecla.equals("S")){
+                    continue;
+                }
+            }
+        }
+    }
+
+    public void lacoForNubank(){
+        for (this.vende = 0; this.vende <= this.rodando; this.vende++){
+            this.precoNubank = preco.nextFloat() * 180;
+            System.out.println("Esse é o preço atual dela R$:"+this.precoNubank);
+
+            if (this.vende == this.rodando){
+                this.calculoGanhos = this.precoNubank * this.quantAcoes;
+                if (valorInvestido < calculoGanhos){
+                    this.saldo += this.calculoGanhos;
+                    this.calculoGanhos -= this.valorInvestido;
+                    System.out.println("Seu lucro foi de R$:"+this.calculoGanhos);
+                    System.out.println("=========================================================");
+                } else {
+                    this.saldo -= this.calculoGanhos;
+                    this.calculoGanhos -= this.valorInvestido;
+                    System.out.println("Seu prejuizo foi de R$:"+this.calculoGanhos);
+                    System.out.println("=========================================================");
+                }
+            } else {
+                System.out.println("Ciclo ainda não encerrado!");
+                System.out.println("---------------------------------------------");
+                System.out.println("Digite a tecla {S} para continuar");
+                qualquerTecla = digite.next().toUpperCase();
+                if (qualquerTecla.equals("S")){
+                    continue;
+                }
+            }
+        }
+    }
+
+
+    public void lacoForJBS(){
+        for (this.vende = 0; this.vende <= this.rodando; this.vende++){
+            this.precoJBS = preco.nextFloat() * 60;
+            System.out.println("Esse é o preço atual dela R$:"+this.precoJBS);
+
+            if (this.vende == this.rodando){
+                this.calculoGanhos = this.precoJBS * this.quantAcoes;
+                if (valorInvestido < calculoGanhos){
+                    this.saldo += this.calculoGanhos;
+                    this.calculoGanhos -= this.valorInvestido;
+                    System.out.println("Seu lucro foi de R$:"+this.calculoGanhos);
+                    System.out.println("=========================================================");
+                } else {
+                    this.saldo -= this.calculoGanhos;
+                    this.calculoGanhos -= this.valorInvestido;
+                    System.out.println("Seu prejuizo foi de R$:"+this.calculoGanhos);
+                    System.out.println("=========================================================");
+                }
+            } else {
+                System.out.println("Ciclo ainda não encerrado!");
+                System.out.println("---------------------------------------------");
+                System.out.println("Digite a tecla {S} para continuar");
+                qualquerTecla = digite.next().toUpperCase();
+                if (qualquerTecla.equals("S")){
+                    continue;
+                }
+            }
+        }
+    }
 
 
 
