@@ -16,4 +16,4 @@ Faço um desafio para você clone o repositório ou copie os codigos indo na pas
 Rode a classe principal que é a main e faça um depósito de 1000 reais usando as opções de investir tente conseguir 2000
 
 ### Próxima atualização :pushpin:
-Melhorar o método de investimento da bolsa criando ações e criar as taxas de investimento 
+Melhorar o codigo do projeto deixando ele clean e melhorar o sistema de taxas
