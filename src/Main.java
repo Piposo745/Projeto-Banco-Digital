@@ -12,9 +12,10 @@ public class Main {
 
 
             opcao = 0;
-            while (opcao != 6) {
+            while (opcao != 7) {
                 System.out.println("SELECIONE UMA DAS OPÇÕES ABAIXO");
-                System.out.println("1 - Depositar\n2 - Sacar\n3 - Ver extrato\n4 - Investir\n5 - Investir na bolsa\n6 - sair");
+                System.out.println("1 - Depositar\n2 - Sacar\n3 - Ver extrato\n4 - Investir\n5 - Investir na bolsa\n"+
+                        "6 - Investir em ações\n7 - Sair");
                 opcao = scan.nextInt();
 
                 switch (opcao) {
@@ -56,20 +57,28 @@ public class Main {
                     }
 
                     case 6: {
-                        System.out.println("Finalizando sistema....");
+                        System.out.println("Investindo em ações");
+                        cc.investirAcoes();
                         break;
                     }
 
-                    default:
+                    case 7: {
+                        System.out.println("Finalizando o sistema");
+                        break;
+                    }
+
+                    default: {
                         System.out.println("Insira uma opção valida");
                         System.out.println("===============================================");
+                        break;
 
+                    }
 
                 }
 
             }
 
-
         }
     }
+
 
