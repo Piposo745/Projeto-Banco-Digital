@@ -42,6 +42,13 @@ public abstract class Conta implements IConta {
     }
 
     @Override
+    public void depositar(float valor) {
+        this.saldo = saldo + valor;
+        System.out.println("Deposito efetuado com sucesso");
+        taxaDepositar(valor);
+    }
+
+    @Override
     public void taxaSacar(float valor){
         calculoTaxa = valor * 0.04f;
         this.saldo -= calculoTaxa;
@@ -57,13 +64,6 @@ public abstract class Conta implements IConta {
         }
 
 
-    }
-
-    @Override
-    public void depositar(float valor) {
-        this.saldo = saldo + valor;
-        System.out.println("Deposito efetuado com sucesso");
-        taxaDepositar(valor);
     }
 
 
@@ -95,9 +95,11 @@ public abstract class Conta implements IConta {
         switch (escolhaEmpresaInvestimento){
 
             case 1: {
+                this.precoPetrobras = random.nextFloat() * 80;
                 System.out.println("Ação petrobras");
                 System.out.println("Deseja comprar quantas ações? Preço R$"+this.precoPetrobras);
                 this.quantAcoes = entrada.nextInt();
+
                 System.out.println("Quantos ciclos queres esperar para vender as ações?");
                 this.ciclos = entrada.nextInt() - 1;
                 this.valorInvestido = this.precoPetrobras * quantAcoes;
@@ -118,9 +120,11 @@ public abstract class Conta implements IConta {
             }
 
             case 2: {
+                this.precoNubank = random.nextFloat() * 180;
                 System.out.println("Ações Nubank");
                 System.out.println("Deseja comprar quantas ações? Preço R$"+this.precoNubank);
                 this.quantAcoes = entrada.nextInt();
+
                 System.out.println("Quantos ciclos queres esperar esperar para vender as ações?");
                 this.ciclos = entrada.nextInt() - 1;
                 this.valorInvestido = this.precoNubank * quantAcoes;
@@ -143,9 +147,11 @@ public abstract class Conta implements IConta {
             }
 
             case 3: {
+                this.precoJBS = random.nextFloat() * 60;
                 System.out.println("Ações JBS");
                 System.out.println("Deseja comprar quantas ações? Preço R$"+this.precoJBS);
                 this.quantAcoes = entrada.nextInt();
+
                 System.out.println("Quantos ciclos queres esperar esperar para vender as ações?");
                 this.ciclos = entrada.nextInt() - 1;
                 this.valorInvestido = this.precoJBS * quantAcoes;
