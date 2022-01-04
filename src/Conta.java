@@ -26,38 +26,24 @@ public abstract class Conta implements IConta {
     Random random = new Random();
 
 
-    public void investimentos(){
+    public void investimentosGeral(){
         System.out.println("Digite 1 para renda fixa ou 2 para renda variavel");
         EscolhaInvestimentoSimples = entrada.nextInt();
         investimentoVariavel = random.nextInt(3);
 
-        if (EscolhaInvestimentoSimples == 1){
-            this.saldo *= 1.03f;
-        } else {
-            if (investimentoVariavel == 0){
-                this.saldo *= 1.05f;
-                System.out.println("+ 5% na carteira");
-            } else if (investimentoVariavel == 1){
-                this.saldo *= 1.15f;
-                System.out.println("+ 15% na carteira");
-            } else {
-                this.saldo *= 0.90f;
-                System.out.println("Você vendeu na baixa :((");
-            }
-
-        }
+        verificacaoInvestimentosGerais();
     }
 
     @Override
-    public void taxaDepositar(){
-        calculoTaxa *= 0.2f;
+    public void taxaDepositar(float valor){
+        calculoTaxa = valor * 0.2f;
         this.saldo -= calculoTaxa;
 
     }
 
     @Override
-    public void taxaSacar(){
-        calculoTaxa *= 0.4f;
+    public void taxaSacar(float valor){
+        calculoTaxa = valor * 0.04f;
         this.saldo -= calculoTaxa;
 
     }
@@ -66,7 +52,7 @@ public abstract class Conta implements IConta {
     public void sacar(float valor) {
         if (this.saldo > 0){
             this.saldo = saldo - valor;
-            taxaSacar();
+            taxaSacar(valor);
             System.out.println("Saque efetuado com sucesso");
         }
 
@@ -77,7 +63,7 @@ public abstract class Conta implements IConta {
     public void depositar(float valor) {
         this.saldo = saldo + valor;
         System.out.println("Deposito efetuado com sucesso");
-        taxaDepositar();
+        taxaDepositar(valor);
     }
 
 
@@ -95,20 +81,8 @@ public abstract class Conta implements IConta {
         AcaoSubiuDesceu = entrada.nextInt();
         investimentoBinarios = random.nextInt(2);
 
-        if (AcaoSubiuDesceu == 0 && investimentoBinarios == 0){
-            this.saldo *= 1.33f;
-            System.out.println("Você acertou a ação subiu, isso te rendeu 33% de lucro UAU% :))");
-        } else if (AcaoSubiuDesceu == 1 && investimentoBinarios == 1){
-            this.saldo *= 1.09f;
-            System.out.println("Você acertou a ação desceu e isso te rendeu 9% de lucro");
-        } else {
-            this.saldo *= 0.82;
-            System.out.println("Que desastre você errou :(, descanse e tente mais tarde ou " +
-                    "peça um emprestimo conosco :)");
-        }
+        verificacaoOpcoesBinarias();
     }
-
-
 
 
     public void investirAcoes(){
@@ -199,7 +173,9 @@ public abstract class Conta implements IConta {
         }
     }
 
-    public void lacoForPetrobras() {
+    // Métodos internos
+
+    private void lacoForPetrobras() {
         for (this.vende = 0; this.vende <= this.ciclos; this.vende++){
             this.precoPetrobras = random.nextFloat() * 80;
             System.out.println("Esse é o preço atual delas: "+this.precoPetrobras);
@@ -229,7 +205,8 @@ public abstract class Conta implements IConta {
         }
     }
 
-    public void lacoForNubank(){
+
+    private void lacoForNubank(){
         for (this.vende = 0; this.vende <= this.ciclos; this.vende++){
             this.precoNubank = random.nextFloat() * 180;
             System.out.println("Esse é o preço atual dela R$:"+this.precoNubank);
@@ -260,7 +237,7 @@ public abstract class Conta implements IConta {
     }
 
 
-    public void lacoForJBS(){
+    private void lacoForJBS(){
         for (this.vende = 0; this.vende <= this.ciclos; this.vende++){
             this.precoJBS = random.nextFloat() * 60;
             System.out.println("Esse é o preço atual dela R$:"+this.precoJBS);
@@ -287,6 +264,38 @@ public abstract class Conta implements IConta {
                     continue;
                 }
             }
+        }
+    }
+
+    private void verificacaoOpcoesBinarias(){
+        if (AcaoSubiuDesceu == 0 && investimentoBinarios == 0){
+            this.saldo *= 1.33f;
+            System.out.println("Você acertou a ação subiu, isso te rendeu 33% de lucro UAU% :))");
+        } else if (AcaoSubiuDesceu == 1 && investimentoBinarios == 1){
+            this.saldo *= 1.09f;
+            System.out.println("Você acertou a ação desceu e isso te rendeu 9% de lucro");
+        } else {
+            this.saldo *= 0.82;
+            System.out.println("Que desastre você errou :(, descanse e tente mais tarde ou " +
+                    "peça um emprestimo conosco :)");
+        }
+    }
+
+    private void verificacaoInvestimentosGerais(){
+        if (EscolhaInvestimentoSimples == 1){
+            this.saldo *= 1.03f;
+        } else {
+            if (investimentoVariavel == 0){
+                this.saldo *= 1.05f;
+                System.out.println("+ 5% na carteira");
+            } else if (investimentoVariavel == 1){
+                this.saldo *= 1.15f;
+                System.out.println("+ 15% na carteira");
+            } else {
+                this.saldo *= 0.90f;
+                System.out.println("Você vendeu na baixa :((");
+            }
+
         }
     }
 
