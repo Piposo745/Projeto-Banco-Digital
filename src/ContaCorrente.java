@@ -23,7 +23,7 @@ public class ContaCorrente extends Conta {
         super.extrato();
     }
 
-    public void taxaConta(){
-        saldo -= 2.5f;
+    public void taxaOperacoes(){
+        saldo -= 0.5f;
     }
 }
